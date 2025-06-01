@@ -43,13 +43,13 @@ function startApp(db) {
     });
   });
 
-  app.post('/todos', (req, res) => {
-    const { name } = req.body;
-    db.query('INSERT INTO todo_items (name) VALUES (?)', [name], (err, results) => {
-      if (err) throw err;
-      res.status(201).json({ id: results.insertId, name });
+app.post('/todos', (req, res) => {
+    const { task } = req.body; // Changed 'name' to 'task'
+    db.query('INSERT INTO todo_items (task) VALUES (?)', [task], (err, results) => {
+        if (err) throw err;
+        res.status(201).json({ id: results.insertId, task });
     });
-  });
+});
 
   app.listen(3000, () => {
     console.log('App is running on port 3000');
