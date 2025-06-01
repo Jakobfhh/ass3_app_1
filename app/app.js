@@ -6,6 +6,7 @@ app.use(express.json());
 const retry = 5;  // Versuche es bis zu 5 Mal
 let attempts = 0;
 
+
 // Funktion, um die Datenbank zu verbinden und bei Bedarf erneut zu versuchen
 function connectDB(callback) {
   const db = mysql.createConnection({

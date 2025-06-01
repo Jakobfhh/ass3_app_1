@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - "app/**"   # nur Änderungen im app-Verzeichnis lösen den Workflow aus
+      - "app/**"
 
 jobs:
   build:
