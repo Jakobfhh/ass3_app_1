@@ -4,13 +4,13 @@ FROM node:lts-alpine
 # Setze das Arbeitsverzeichnis im Container auf /app
 WORKDIR /app
 
-# Kopiere package.json und package-lock.json (falls vorhanden)
+# Kopiere package.json und package-lock.json (falls vorhanden) aus dem 'app' Verzeichnis
 COPY ./app/package*.json ./
 
 # Installiere die Abhängigkeiten
 RUN npm install
 
-# Kopiere den Rest der Anwendung
+# Kopiere den gesamten Inhalt aus dem 'app' Verzeichnis
 COPY ./app /app
 
 # Exponiere den Port
