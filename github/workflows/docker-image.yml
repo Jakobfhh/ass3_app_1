@@ -5,34 +5,35 @@ on:
     branches:
       - master
     paths:
-      - "app/**"
+      - "app/**"  # Only triggers when files inside the app directory change
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout des Codes aus dem Repository
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Docker Setup für die GitHub Actions Runner
+      # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      # Logge dich in die GitHub Container Registry ein
+      # Log in to GitHub Container Registry
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Baue das Docker-Image
+      # Build the Docker image using the Dockerfile from the app/ directory
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/ass3_app_1:latest .
-      
-      # Push das Docker-Image in die GitHub Container Registry
+          docker build -t ghcr.io/${{ github.repository }}/ass3_app_1:${{ github.sha }} ./app  # Use the app directory for the build context
+
+      # Push Docker image with a unique tag based on Git commit hash
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}/ass3_app_1:latest
+          IMAGE_TAG=ghcr.io/${{ github.repository }}/ass3_app_1:${{ github.sha }}
+          docker push $IMAGE_TAG
